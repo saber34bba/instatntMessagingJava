@@ -44,6 +44,7 @@ public class Server extends javax.swing.JFrame {
         textfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Server");
 
         Sendbtn.setBackground(new java.awt.Color(51, 0, 204));
         Sendbtn.setText("Send");

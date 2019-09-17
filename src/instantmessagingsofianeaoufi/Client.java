@@ -46,6 +46,7 @@ public class Client extends javax.swing.JFrame {
         textfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Client");
 
         Send.setBackground(new java.awt.Color(51, 51, 255));
         Send.setText("Send");
