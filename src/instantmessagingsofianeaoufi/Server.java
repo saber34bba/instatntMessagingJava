@@ -5,6 +5,12 @@
  */
 package instantmessagingsofianeaoufi;
 
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Sofiane
@@ -14,6 +20,11 @@ public class Server extends javax.swing.JFrame {
     /**
      * Creates new form ServerAoufiSofiane
      */
+    
+    static ServerSocket serverSocket;
+    static DataInputStream dataInputStream;
+    static DataOutputStream dataOutputStream;
+    static Socket socket;
     public Server() {
         initComponents();
     }
@@ -35,6 +46,11 @@ public class Server extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Sendbtn.setText("Send");
+        Sendbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SendbtnActionPerformed(evt);
+            }
+        });
 
         textarea.setColumns(20);
         textarea.setRows(5);
@@ -47,8 +63,8 @@ public class Server extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(92, 92, 92)
                 .addComponent(textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
-                .addComponent(Sendbtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addComponent(Sendbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -69,6 +85,14 @@ public class Server extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SendbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendbtnActionPerformed
+        
+      String msgout="";
+       
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_SendbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -104,6 +128,21 @@ public class Server extends javax.swing.JFrame {
                 new Server().setVisible(true);
             }
         });
+        String Msg="";
+
+        try {
+            serverSocket=new ServerSocket(1200);
+            socket=serverSocket.accept();
+            dataInputStream=new DataInputStream(socket.getInputStream());
+            dataOutputStream=new DataOutputStream(socket.getOutputStream());
+            while (!Msg.equalsIgnoreCase("-1"))
+            {
+                Msg=dataInputStream.readUTF();
+                textarea.setText(textarea.getText().trim()+"\n"+Msg);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
