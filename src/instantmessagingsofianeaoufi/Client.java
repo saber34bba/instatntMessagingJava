@@ -5,9 +5,15 @@
  */
 package instantmessagingsofianeaoufi;
 
+import static instantmessagingsofianeaoufi.Server.dataOutputStream;
+import static instantmessagingsofianeaoufi.Server.serverSocket;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,7 +47,12 @@ public class Client extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Send.setText("jButton1");
+        Send.setText("Send");
+        Send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SendActionPerformed(evt);
+            }
+        });
 
         textarea.setColumns(20);
         textarea.setRows(5);
@@ -52,7 +63,7 @@ public class Client extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+                .addContainerGap(109, Short.MAX_VALUE)
                 .addComponent(textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(Send)
@@ -76,6 +87,20 @@ public class Client extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendActionPerformed
+           try {
+                  String msgo="";
+                     msgo = textfield.getText().trim();
+
+                    dataOutputStream.writeUTF(msgo);
+            
+// TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,12 +135,28 @@ public class Client extends javax.swing.JFrame {
                 new Client().setVisible(true);
             }
         });
+        
+           String Msg="";
+
+        try {
+            socket=new Socket("127.0.0.1",1200);
+            
+            dataInputStream=new DataInputStream(socket.getInputStream());
+            dataOutputStream=new DataOutputStream(socket.getOutputStream());
+            while (!Msg.equalsIgnoreCase("-1"))
+            {
+                Msg=dataInputStream.readUTF();
+                textarea.setText(textarea.getText().trim()+"\n"+Msg);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JButton Send;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea textarea;
+    private static javax.swing.JTextArea textarea;
     private javax.swing.JTextField textfield;
     // End of variables declaration//GEN-END:variables
 }
