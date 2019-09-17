@@ -5,27 +5,23 @@
  */
 package instantmessagingsofianeaoufi;
 
-import java.io.*;
-import java.net.ServerSocket;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Sofiane
  */
-public class Server extends javax.swing.JFrame {
+public class Client extends javax.swing.JFrame {
 
     /**
-     * Creates new form ServerAoufiSofiane
+     * Creates new form Client
      */
-    
-    static ServerSocket serverSocket;
+    static Socket socket;
     static DataInputStream dataInputStream;
     static DataOutputStream dataOutputStream;
-    static Socket socket;
-    public Server() {
+    public Client() {
         initComponents();
     }
 
@@ -38,19 +34,14 @@ public class Server extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Sendbtn = new javax.swing.JButton();
+        Send = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         textarea = new javax.swing.JTextArea();
         textfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Sendbtn.setText("Send");
-        Sendbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SendbtnActionPerformed(evt);
-            }
-        });
+        Send.setText("jButton1");
 
         textarea.setColumns(20);
         textarea.setRows(5);
@@ -61,11 +52,11 @@ public class Server extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addComponent(Sendbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
+                .addContainerGap(93, Short.MAX_VALUE)
+                .addComponent(textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(Send)
+                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -75,30 +66,16 @@ public class Server extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Sendbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                    .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void SendbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendbtnActionPerformed
-        
-             try {
-                  String msgo="";
-                     msgo = textfield.getText().trim();
-
-                    dataOutputStream.writeUTF(msgo);
-            
-// TODO add your handling code here:
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_SendbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,44 +94,28 @@ public class Server extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Server().setVisible(true);
+                new Client().setVisible(true);
             }
         });
-        String Msg="";
-
-        try {
-            serverSocket=new ServerSocket(1200);
-            socket=serverSocket.accept();
-            dataInputStream=new DataInputStream(socket.getInputStream());
-            dataOutputStream=new DataOutputStream(socket.getOutputStream());
-            while (!Msg.equalsIgnoreCase("-1"))
-            {
-                Msg=dataInputStream.readUTF();
-                textarea.setText(textarea.getText().trim()+"\n"+Msg);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Sendbtn;
+    private static javax.swing.JButton Send;
     private javax.swing.JScrollPane jScrollPane1;
-    private static javax.swing.JTextArea textarea;
+    private javax.swing.JTextArea textarea;
     private javax.swing.JTextField textfield;
     // End of variables declaration//GEN-END:variables
 }
