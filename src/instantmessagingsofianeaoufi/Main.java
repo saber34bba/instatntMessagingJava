@@ -9,7 +9,7 @@ package instantmessagingsofianeaoufi;
  *
  * @author Sofiane
  */
-public class InstantMessagingSofianeAOUFI {
+public class Main {
 
     /**
      * @param args the command line arguments
