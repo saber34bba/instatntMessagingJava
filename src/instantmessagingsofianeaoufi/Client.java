@@ -47,14 +47,19 @@ public class Client extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        Send.setBackground(new java.awt.Color(51, 51, 255));
         Send.setText("Send");
+        Send.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Send.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SendActionPerformed(evt);
             }
         });
 
+        textarea.setEditable(false);
+        textarea.setBackground(new java.awt.Color(204, 204, 204));
         textarea.setColumns(20);
+        textarea.setFont(new java.awt.Font("Monospaced", 3, 13)); // NOI18N
         textarea.setRows(5);
         jScrollPane1.setViewportView(textarea);
 
@@ -63,10 +68,10 @@ public class Client extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(109, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addComponent(textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
-                .addComponent(Send)
+                .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -76,8 +81,8 @@ public class Client extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,7 +151,8 @@ public class Client extends javax.swing.JFrame {
             while (!Msg.equalsIgnoreCase("-1"))
             {
                 Msg=dataInputStream.readUTF();
-                textarea.setText(textarea.getText().trim()+"\n"+Msg);
+                
+                textarea.setText(textarea.getText().trim()+"\n"+"Server : "+Msg);
             }
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
